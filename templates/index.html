@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FraudGuard | Fraud Detection System</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=4">
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <span class="brand-icon">✦</span>
+        <div>
+            <h1>FraudGuard</h1>
+            <p>Financial Security & Intelligence</p>
+        </div>
+    </div>
+
+    <div class="system-status">
+        <span class="status-dot"></span>
+        System Online
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="welcome">
+        <div>
+            <p class="eyebrow">FRAUD MONITORING SYSTEM</p>
+            <h2>Transaction Overview</h2>
+            <p>Monitor daily transactions and identify suspicious activity.</p>
+        </div>
+    </section>
+
+    <section class="toolbar">
+        <div class="date-control">
+            <label for="reportDate">REPORT DATE</label>
+            <select id="reportDate">
+                <option value="all">All Dates</option>
+            </select>
+        </div>
+
+        <button class="export-btn" id="downloadCsv" type="button">
+            ↓ &nbsp; Export CSV
+        </button>
+    </section>
+
+    <div class="section-heading">
+        <div>
+            <h2 id="reportTitle">Daily Fraud Report</h2>
+            <p>Summary of selected transaction activity</p>
+        </div>
+        <span class="live-label">LIVE REPORT</span>
+    </div>
+
+    <section class="stats">
+
+        <article class="stat-card">
+            <div class="stat-top">
+                <span>Transactions</span>
+                <span class="stat-icon blue">↗</span>
+            </div>
+            <h3 id="tx">0</h3>
+            <p>Total daily transactions</p>
+        </article>
+
+        <article class="stat-card">
+            <div class="stat-top">
+                <span>Transaction Value</span>
+                <span class="stat-icon purple">₹</span>
+            </div>
+            <h3 id="tot">₹0</h3>
+            <p>Total transaction amount</p>
+        </article>
+
+        <article class="stat-card">
+            <div class="stat-top">
+                <span>Suspicious Accounts</span>
+                <span class="stat-icon red">!</span>
+            </div>
+            <h3 id="sus">0</h3>
+            <p>Accounts requiring attention</p>
+        </article>
+
+        <article class="stat-card">
+            <div class="stat-top">
+                <span>Safe Accounts</span>
+                <span class="stat-icon green">✓</span>
+            </div>
+            <h3 id="safe">0</h3>
+            <p>Accounts without detected flags</p>
+        </article>
+
+    </section>
+
+    <section class="panel">
+
+        <div class="panel-heading">
+            <div>
+                <h2>Daily Account Report</h2>
+                <p>Account-wise fraud detection results</p>
+            </div>
+        </div>
+
+        <div class="filters">
+            <input id="search" type="search"
+                   placeholder="Search account ID...">
+
+            <select id="statusFilter">
+                <option value="all">All Statuses</option>
+                <option value="Suspicious">Suspicious</option>
+                <option value="Safe">Safe</option>
+            </select>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>DATE</th>
+                        <th>ACCOUNT</th>
+                        <th>TRANSACTIONS</th>
+                        <th>DAILY AMOUNT</th>
+                        <th>DETECTION FLAGS</th>
+                        <th>STATUS</th>
+                    </tr>
+                </thead>
+                <tbody id="dailyRows"></tbody>
+            </table>
+        </div>
+
+        <p id="emptyMessage" hidden>No records found.</p>
+
+    </section>
+
+    <section class="panel add-panel">
+
+        <div class="panel-heading">
+            <div>
+                <h2>Add New Transaction</h2>
+                <p>Register a transaction for fraud monitoring</p>
+            </div>
+        </div>
+
+        <form id="addTransaction">
+
+            <div class="form-grid">
+
+                <div class="form-field">
+                    <label for="account">Account ID</label>
+                    <input id="account" maxlength="30"
+                           placeholder="e.g. A105" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="amount">Amount (₹)</label>
+                    <input id="amount" type="number"
+                           min="0.01" step="0.01"
+                           placeholder="e.g. 65000" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="date">Transaction Date</label>
+                    <input id="date" type="date" required>
+                </div>
+
+            </div>
+
+            <button class="primary-btn" type="submit">
+                + Add Transaction
+            </button>
+
+            <p id="message" role="status"></p>
+
+        </form>
+
+    </section>
+
+    <section class="panel rules-panel">
+
+        <div class="panel-heading">
+            <div>
+                <h2>Fraud Detection Rules</h2>
+                <p>Current automated monitoring conditions</p>
+            </div>
+        </div>
+
+        <div class="rules-grid">
+
+            <div class="rule">
+                <span class="rule-number">01</span>
+                <div>
+                    <h3>High Value Transaction</h3>
+                    <p>Single transaction above ₹50,000.</p>
+                </div>
+            </div>
+
+            <div class="rule">
+                <span class="rule-number">02</span>
+                <div>
+                    <h3>Daily Frequency</h3>
+                    <p>Four or more transactions by one account in a day.</p>
+                </div>
+            </div>
+
+            <div class="rule">
+                <span class="rule-number">03</span>
+                <div>
+                    <h3>Daily Amount Limit</h3>
+                    <p>Daily account transaction total above ₹1,00,000.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <footer>
+        FraudGuard · Transaction Monitoring Dashboard
+        <span>Demo Project</span>
+    </footer>
+
+</main>
+
+<script src="{{ url_for('static', filename='app.js') }}?v=4"></script>
+
+</body>
+</html>
